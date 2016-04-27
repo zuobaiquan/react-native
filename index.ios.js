@@ -30,9 +30,9 @@ var MenuList = React.createClass({
                 </View>
                 <View style={[styles.row,styles.flex_1]}>
                       <ScrollView  style={[styles.left_pannel,styles.flex_1]}>
-                          <Text onPree={this.wholeArea} style={[styles.left_row,this.state.wholeAreaFFF]}>全部区域</Text>
-                          <Text onPree={this.hotBusiness} style={[styles.left_row,this.state.hotBusinessFFF]}>热门商圈</Text>
-                          <Text onPree={this.hotDistrict} style={[styles.left_row,this.state.hotDistrictFFF]}>热门行政区</Text>
+                          <Text onPress={this.wholeArea} style={[styles.left_row,this.state.wholeAreaFFF]}>全部区域</Text>
+                          <Text onPress={this.hotBusiness} style={[styles.left_row,this.state.hotBusinessFFF]}>热门商圈</Text>
+                          <Text onPress={this.hotDistrict} style={[styles.left_row,this.state.hotDistrictFFF]}>热门行政区</Text>
                       </ScrollView>
                       {
                         this.state.wholeArea?
@@ -143,6 +143,7 @@ var styles = StyleSheet.create({
     lineHeight:20,
     fontSize:14,
     color:'#7C7C7C',
+    paddingLeft:10,
   },
   right_pannel:{
     marginLeft:10,
