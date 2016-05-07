@@ -1,6 +1,5 @@
 var React = require('react-native');
 var Dimensions=require('Dimensions');
-var Swiper=require('react-native-swiper');
 var {
   StyleSheet,
   AppRegistry,
@@ -22,7 +21,6 @@ var {
 
 var minwidth=React.PixelRatio.get();
 var [maxwidth,maxheight]=[Dimensions.get('window').width,Dimensions.get('window').height];
-
 
 //测试数据 对象数组
 var testData = [
@@ -97,16 +95,36 @@ var myApp = React.createClass({
 
   getInitialState: function(){
     return {
-      tab: 'newslist'
+      tab: 'newslist',
+      valueid:'sss',
+      valuename:'sss',
     };
+  },
+  setId: function(val){
+    this.setState({
+      valueid: val,
+    });
+  },
+  setName: function(val){
+    this.setState({
+      valuename: val,
+    });
   },
   selectTab: function(tabName){
     this.setState({
-      tab: tabName
+      tab: tabName,
     });
   },
   myAlert:function(){
+      var id=this.state.valueid;
+      var name=this.state.valuename;
+      var info={
+        userid:id,
+        username:name,
+      };
+      console.log(info);
       AlertIOS.alert('第一个参数title','第二个参数message',buttons);
+
   },
   render: function(){
     return(
@@ -115,13 +133,8 @@ var myApp = React.createClass({
               <NavigatorIOS style={{flex:1}} initialRoute={{component: listItem,title: '新闻频道',passProps: {},}}  />
           </TabBarIOS.Item>
           <TabBarIOS.Item title="栏目导航" systemIcon="bookmarks" onPress={this.selectTab.bind(this,'piclist')} selected={this.state.tab==='piclist'}>
-              <View>
-                  <Swiper style={styles.wrampper} showButtons={true} autoplay={true} height={300}>
-                      <View style={{flex:1}}><Image style={{height:300,width:maxwidth-10}} source={{uri:'http://zyz.wust.edu.cn/ueditor/php/upload/image/20160420/1461126325434276-lp.jpg'}} /></View>
-                      <View style={{flex:1}}><Image style={{height:300,width:maxwidth}} source={{uri:'http://zyz.wust.edu.cn/ueditor/php/upload/image/20160321/1458560442815064-lp.jpg'}} /></View>
-                      <View style={{flex:1}}><Image style={{height:300,width:maxwidth}} source={{uri:'http://zyz.wust.edu.cn/ueditor/php/upload/image/20160320/1458439229111392-lp.jpg'}} /></View>
-                      <View style={{flex:1}}><Image style={{height:300,width:maxwidth}} source={{uri:'http://zyz.wust.edu.cn/ueditor/php/upload/image/20160406/1459950424254403-lp.jpg'}} /></View>
-                  </Swiper>
+              <View style={ styles.person }>
+                 <Image style={ styles.personImage } source={{uri:'http://zyz.wust.edu.cn/uploads/allimg/151203/1_1915141322.PNG'}} />
               </View>
           </TabBarIOS.Item>
           <TabBarIOS.Item title="个人中心" systemIcon="contacts" onPress={this.selectTab.bind(this,'person')} selected={this.state.tab==='person'}>
@@ -129,8 +142,14 @@ var myApp = React.createClass({
                   <Text style={styles.personTitle}>账号绑定</Text>
                   <Image style={styles.personImg} source={{uri:'http://www.longzhang.net/includes/myweixin/public/images/logo.png'}} />
                   <View style={styles.textContainer}>
-                      <View style={[styles.info,{flex:0.2}]}><Text style={styles.personInfo}>学号：</Text><TextInput style={styles.input} placeholder="请输入您的学号" /></View>
-                      <View style={[styles.info,{flex:1}]}><Text style={styles.personInfo}>姓名：</Text><TextInput style={styles.input} placeholder="请输入您的姓名" password="true"   /></View>
+                      <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center',borderWidth:1,borderColor:'#ddd',paddingLeft:5,borderBottomWidth:0}}>
+                          <Image source={{uri:'http://www.longzhang.net/includes/myweixin/public/images/user.png'}} style={{height:15,width:15}} />
+                          <TextInput style={styles.input} onChangeText={this.setId.bind(this,this.state.valueid)} placeholder="请输入您的学号" />
+                      </View>
+                      <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center',borderWidth:1,borderColor:'#ddd',paddingLeft:5,}}>
+                          <Image source={{uri:'http://www.longzhang.net/includes/myweixin/public/images/user.png'}} style={{height:15,width:15}} />
+                          <TextInput style={styles.input} onChangeText={this.setName.bind(this,this.state.valuename)} placeholder="请输入您的姓名" password="true"   />
+                      </View>
                   </View>
                   <View style={styles.personBtn}>
                     <TouchableHighlight underlayColor='#E1F6FF' onPress={this.myAlert} >
@@ -164,9 +183,7 @@ var listItem =React.createClass({
                           {testData[rowID]['title']}
                       </Text>
                       <Text style={{fontSize:12,marginTop:7,color:'#776955'}}>{testData[rowID]['date']}</Text>
-                      <Text style={{fontSize:12,marginTop:7,color:'#776955'}}>{testData[rowID]['date']}</Text>
                 </View>
-
               </View>
             </TouchableOpacity>
         );
@@ -202,7 +219,7 @@ var Detail = React.createClass({
   render: function(){
     return (
       <ScrollView>
-        <Text>新闻详情界面新闻详情界面新闻详情界面新闻详情界面新闻详情界面</Text>
+        <Text style={{marginTop:10}}>新闻详情界面新闻详情界面新闻详情界面新闻详情界面新闻详情界面</Text>
       </ScrollView>
     );
   }
@@ -251,7 +268,7 @@ var styles = StyleSheet.create({
     width:maxwidth-20,
     height:82,
     marginTop:10,
-    marginBottom:10,
+    marginBottom:30,
   },
   textContainer:{
     flexDirection: 'column',
@@ -259,18 +276,10 @@ var styles = StyleSheet.create({
 
   },
   input:{
-    height:45,
-    borderWidth:1,
-    borderColor:'#ddd',
-    width:300,
+    height:40,
+    borderWidth:0,
+    width:maxwidth-80,
     paddingLeft:10,
-  },
-  info:{
-    flexDirection:'row',
-    flex:1,
-    justifyContent:'center',
-    alignItems:'center',
-    marginBottom:8,
   },
   personInfo:{
       fontSize:18,
@@ -278,16 +287,28 @@ var styles = StyleSheet.create({
       fontWeight:'bold',
   },
   personBtn:{
-    width:maxwidth-50,
+    width:maxwidth-60,
     backgroundColor:'#005C3F',
     height:45,
     justifyContent:'center',
     alignItems:'center',
     borderRadius:10,
+    marginTop:20,
   },
-  wrampper:{
+
+  person: {
+    flex: 1,
+    margin: 10,
     marginTop:25,
-  }
+    borderRadius: 3,
+    overflow: 'hidden'
+  },
+  personImage: {
+    height: 200,
+    width:maxwidth-20,
+  },
+
+
 });
 StatusBar.setBarStyle('default');
 AppRegistry.registerComponent('Hello', () => myApp);
