@@ -25,11 +25,15 @@ export default class Myswiper extends LAB.Component {
       delay:PropTypes.number.isRequired, //设置延迟时间 ,单位是秒
       item:PropTypes.array.isRequired,//图片来源，存放在一个数组里面
       isHasDot:PropTypes.bool,//是否显示轮播小点点
+      height:PropTypes.number.isRequired,
+      width:PropTypes.number.isRequired,
   };
   static defaultProps = {
       autoplay:true,
       delay:1,
       isHasDot:true,
+      height:300,
+      width:Screen_Width,
   };
   constructor(props, context) {
       super(props, context);
@@ -38,19 +42,25 @@ export default class Myswiper extends LAB.Component {
           nowPage:0,
       });
   }
+  handlePress(i){
+      clearInterval(this.playTimer);
+      let handelNum = i - this.state.nowPage;
+      this.changePageNum(handelNum);
+      this.autoplay();
+  }
   render() {
     let i;
     return(
       <View style={[this.getStyle('container'), this.props.style]}>
-          <View style={this.getStyle('viewcontent')}>
-              <Image style={this.getStyle('image')}  source={{uri:this.props.item[this.state.nowPage].url}} />
+          <View style={[this.getStyle('viewcontent'),{width:this.props.width,height:this.props.height}]}>
+              <Image style={{width:this.props.width,height:this.props.height}}  source={{uri:this.props.item[this.state.nowPage].url}} />
               <View style={this.getStyle('imgBottom')}>
                   <Text style={this.getStyle('leftText')} numberOfLines={1}>{this.props.item[this.state.nowPage].title}</Text>
                   {this.props.isHasDot?
                     <View style={{flexDirection:'row'}}>
                         {this.props.item.map((item,i) => {
                             return (
-                              <TouchableHighlight key={i} onPress={(i)=>alert(i)}>
+                              <TouchableHighlight key={i} onPress={this.handlePress.bind(this,i)}>
                                   <View style={(i===this.state.nowPage)?this.getStyle('rightDot'):this.getStyle('rightDotNo')}></View>
                               </TouchableHighlight>
                             );
@@ -69,18 +79,18 @@ export default class Myswiper extends LAB.Component {
   autoplay() {
       // 如果设置自动轮播，就执行
       if(this.props.autoplay) {
-        this.playTimer = setInterval(()=> {
+        this.playTimer=setInterval(()=> {
           this.changePageNum(1);
         },this.props.delay*1000);
       }
   }
   changePageNum(n){
-      var chang_n = this.state.nowPage + n;
-      if(chang_n >= this.props.item.length) {
-        chang_n = chang_n - this.props.item.length;
+      var chang_n=this.state.nowPage + n;
+      if(chang_n>=this.props.item.length) {
+        chang_n-=this.props.item.length;
       }
       if(chang_n < 0) {
-        chang_n = chang_n + this.props.item.length;
+        chang_n+=this.props.item.length;
       }
       this.setState({nowPage: chang_n});
   }
@@ -94,13 +104,7 @@ var _styles = StyleSheet.create({
         flex:1,
     },
     viewcontent:{
-        width:Screen_Width,
-        height:300,
         backgroundColor:'#ddd',
-    },
-    image:{
-        width:Screen_Width,
-        height:300,
     },
     imgBottom:{
         flex:1,
