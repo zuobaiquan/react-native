@@ -15,9 +15,7 @@ import ReactNative, {
 var TimerMixin=require('react-timer-mixin');
 const Screen_Width = Dimensions.get('window').width;
 
-import LAB from 'lab4';
-
-export default class Myswiper extends LAB.Component {
+export default class Myswiper extends Component {
   mixins:[TimerMixin];
   playTimer: null;
   static propTypes = {
@@ -155,3 +153,88 @@ var _styles = StyleSheet.create({
       marginRight:3,
     }
 });
+
+
+//调用：
+'use strict';
+
+import React, {
+  Component,
+  PropTypes,
+} from 'react';
+import ReactNative, {
+  StyleSheet,
+  Platform,
+  View,
+  Text,
+  ScrollView,
+} from 'react-native';
+
+import LAB, {
+  Page,
+  Link,
+} from 'lab4';
+
+import SimplePage from 'lab4/demo/SimplePage';
+import TestHelper from 'lab4/demo/TestHelper';
+
+//测试数据 对象数组
+const testImg = [
+  {
+    title: '多彩志愿行，激情文化宴',
+    url: 'http://zyz.wust.edu.cn/ueditor/php/upload/image/20160420/1461126325434276-lp.jpg'
+  },
+  {
+    title: '志愿交流产生新思想',
+    url: 'http://zyz.wust.edu.cn/ueditor/php/upload/image/20151130/1448886024156119-lp.jpg'
+  },
+  {
+    title: '校总队志愿之行，晚会交流收获颇多',
+    url: 'http://zyz.wust.edu.cn/ueditor/php/upload/image/20151130/1448885282795270-lp.jpg'
+  },
+  {
+    title: '园博会第一期志愿者培训成功举办',
+    url: 'http://zyz.wust.edu.cn/ueditor/php/upload/image/20151115/1447578349224195-lp.jpg'
+  },
+  {
+    title: '志愿“铁军”展科大精神，老师现场表深切慰问',
+    url: 'http://zyz.wust.edu.cn/ueditor/php/upload/image/20151115/1447577261912574-lp.jpg'
+  },
+  {
+    title: '志愿普法走进社区 白衣天使为民服务',
+    url: 'http://zyz.wust.edu.cn/ueditor/php/upload/image/20150411/1428715039101886-lp.jpg'
+  },
+  {
+    title: '12.5宣誓大会暨志愿者文化月总结大会顺利落幕',
+    url: 'http://zyz.wust.edu.cn/ueditor/php/upload/image/20150411/1428716832367061-lp.png'
+  }
+];
+
+export default class MyswiperDemo extends SimplePage {
+  constructor(props) {
+    super(props);
+    this.state = {
+    };
+    this.configPage({
+      scrollable: true, //页面可滚动
+    });
+  }
+
+  renderContent() {
+    return (
+          <View>
+              <cps.com.Myswiper item={testImg} isHasDot={true} autoplay={true}  delay={1} height={200} onDotolor={'blue'} dotColor={'red'} />
+          </View>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
+
+
