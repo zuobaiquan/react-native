@@ -1,25 +1,33 @@
 import React, { Component } from 'react';
 import {
-  Platform,
   StyleSheet,
   Text,
   View
 } from 'react-native';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' +
-    'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
-
-type Props = {};
 export default class App extends Component<Props> {
+  constructor(props){
+    super(props)
+    this.state={
+      times:0
+    }
+  }
+  timePlus(){
+    let time=this.state.times
+    time++
+    this.setState({
+      times:time
+    })
+  }
   render() {
+    console.log(111);
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          hello world
+        <Text style={styles.welcome} onPress={this.timePlus.bind(this)}>
+          有本事点我呀
+        </Text>
+        <Text style={styles.instructions}>
+          你点了我{this.state.times}次
         </Text>
       </View>
     );
@@ -34,7 +42,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   },
   welcome: {
-    fontSize: 20,
+    fontSize: 40,
     textAlign: 'center',
     margin: 10,
   },
