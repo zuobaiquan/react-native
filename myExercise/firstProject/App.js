@@ -19,8 +19,14 @@ export default class App extends Component<Props> {
       times:time
     })
   }
+  componentWillMount(){
+    console.log("componentWillMount");
+  }
+  componentDidMount(){
+    console.log("componentDidMount");
+  }
   render() {
-    console.log(111);
+    console.log("render");
     return (
       <View style={styles.container}>
         <Text style={styles.welcome} onPress={this.timePlus.bind(this)}>
@@ -31,6 +37,19 @@ export default class App extends Component<Props> {
         </Text>
       </View>
     );
+  }
+  shouldComponentUpdate(){
+    console.log("shouldComponentUpdate");
+    return false;
+  }
+  componentWillUpdate(){
+    console.log("componentWillUpdate");
+  }
+  componentDidUpdate(){
+    console.log("componentDidUpdate");
+  }
+  componentWillUnmount(){
+    console.log("componentWillUnmount");
   }
 }
 
