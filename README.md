@@ -7,7 +7,7 @@ React Native 结合了 Web 应用和 Native 应用的优势，可以使用 JavaS
 
 **为了汇集资源，这里引用这里的学习资源：https://github.com/reactnativecn/react-native-guide**
 
-
+动画讲解：https://blog.csdn.net/xiangzhihong8/article/details/72783571?ref=myread
 
 - 构建 Facebook F8 2016 App / React Native 开发指南 <http://f8-app.liaohuqiu.net/>
 - React-Native入门指南 <https://github.com/vczero/react-native-lesson>
